@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <meta name="description" content="MineGuard - Mining Safety Companion App" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MineGuard" />
+  <title>MineGuard – Mining Safety App</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" /></noscript>
+<style id="notices-css">
+/* ══════════════════════════════════════════════════════════════
+   MINEGUARD — SAFETY NOTICES PREMIUM UI
+   Industrial dark theme · Safety yellow · Navy · Teal accents
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── NAV BADGE ───────────────────────────────────────────────── */
+.notice-nav-badge {
+  position: absolute;
+  top: 3px; right: 4px;
+  background: var(--accent-red);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  min-width: 17px;
+  height: 17px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid var(--bg-dark);
+  animation: badge-pop 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  line-height: 1;
+}
+@keyframes badge-pop {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+.nav-notices { position: relative; }
+.notices-card {
+  border-color: rgba(67,97,238,0.35) !important;
+  background: linear-gradient(135deg, rgba(67,97,238,0.06), var(--bg-card)) !important;
+}
+.notices-card .qc-label { color: #8ba4ff !important; }
+.notices-card .qc-count { color: #6b84d9 !important; }
+
+/* ── NOTICES HEADER ──────────────────────────────────────────── */
+.notices-header {
+  padding: 0;
+  background: linear-gradient(160deg, #111527 0%, #0d0f1a 100%);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.notices-hero {
+  padding: 20px 18px 14px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(245,197,24,0.04) 0%, transparent 60%);
+}
+.notices-hero-text h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+.notices-hero-text p {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+.notices-sync-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.notices-sync-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  flex-shrink: 0;
+  animation: sync-pulse 2s ease-in-out infinite;
+}
+@keyframes sync-pulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+/* ── SEARCH ──────────────────────────────────────────────────── */
+.notices-search-wrap {
+  padding: 0 14px 10px;
+}
+.notices-search-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card2);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px;
+  padding: 10px 14px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.notices-search-inner:focus-within {
+  border-color: rgba(245,197,24,0.35);
+  box-shadow: 0 0 0 3px rgba(245,197,24,0.07);
+}
+.notices-search-inner input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+}
+.notices-search-inner input::placeholder { color: var(--text-muted); }
+
+/* ── FILTER PILLS ────────────────────────────────────────────── */
+.notice-filters {
+  display: flex;
+  gap: 7px;
+  padding: 0 14px 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.notice-filters::-webkit-scrollbar { display: none; }
+.notice-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-card2);
+  border: 1px solid rgba(255,255,255,0.09);
+  color: var(--text-secondary);
+  font-family: 'Barlow', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 13px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  letter-spacing: 0.3px;
+}
+.notice-filter-btn:hover   { border-color: rgba(245,197,24,0.3); color: var(--text-primary); }
+.notice-filter-btn.active  { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); box-shadow: 0 2px 10px rgba(245,197,24,0.3); }
+.nf-info.active     { background: #4361ee; color: #fff; border-color: #4361ee; box-shadow: 0 2px 10px rgba(67,97,238,0.35); }
+.nf-warning.active  { background: var(--accent-yellow); color: #000; border-color: var(--accent-yellow); }
+.nf-critical.active { background: var(--accent-red); color: #fff; border-color: var(--accent-red); box-shadow: 0 2px 10px rgba(230,57,70,0.35); }
+.nf-resolved.active { background: var(--accent-green); color: #000; border-color: var(--accent-green); box-shadow: 0 2px 10px rgba(46,196,182,0.3); }
+
+/* Sort button */
+#noticeSortBtn {
+  margin-left: auto;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-muted);
+}
+#noticeSortBtn:hover { color: var(--accent-yellow); }
+
+/* ── NOTICES LIST ────────────────────────────────────────────── */
+.notices-list {
+  padding: 14px 14px calc(var(--nav-height) + 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.notices-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── NOTICE CARD ─────────────────────────────────────────────── */
+.notice-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.2s;
+  overflow: hidden;
+  position: relative;
+}
+.notice-card:active  { transform: scale(0.985); }
+.notice-card:hover   { box-shadow: 0 6px 24px rgba(0,0,0,0.35); border-color: rgba(255,255,255,0.13); }
+
+/* Severity left border stripe */
+.notice-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 14px 0 0 14px;
+}
+.nc-info::before     { background: #4361ee; }
+.nc-warning::before  { background: var(--accent-yellow); }
+.nc-critical::before { background: var(--accent-red); animation: stripe-pulse 1.2s ease-in-out infinite; }
+.nc-resolved::before { background: var(--accent-green); }
+@keyframes stripe-pulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+.nc-unread { background: linear-gradient(135deg, rgba(245,197,24,0.04) 0%, var(--bg-card) 50%); }
+.nc-pinned { box-shadow: 0 0 0 1.5px var(--accent-yellow); }
+.nc-read   { opacity: 0.78; }
+
+/* Card inner padding wrapper */
+.nc-inner { padding: 14px 16px 14px 18px; }
+
+.nc-pin-flag {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--accent-yellow);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.nc-sev-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+  text-transform: uppercase;
+}
+.nc-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nc-unread-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent-yellow);
+  box-shadow: 0 0 6px rgba(245,197,24,0.6);
+  flex-shrink: 0;
+  animation: dot-glow 1.8s ease-in-out infinite;
+}
+@keyframes dot-glow {
+  0%,100% { box-shadow: 0 0 4px rgba(245,197,24,0.5); }
+  50%      { box-shadow: 0 0 10px rgba(245,197,24,0.9); }
+}
+.nc-expired-tag, .nc-ack-tag {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.nc-expired-tag { color: var(--text-muted); background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+.nc-ack-tag     { color: var(--accent-green); background: rgba(46,196,182,0.1); border: 1px solid rgba(46,196,182,0.25); }
+
+.nc-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
+  margin-bottom: 7px;
+  line-height: 1.25;
+}
+.nc-body {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.nc-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.nc-footer span { display: flex; align-items: center; gap: 3px; }
+.nc-expires {
+  font-size: 11px;
+  color: #ff9a3c;
+  font-weight: 600;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── CRITICAL CARD SPECIAL TREATMENT ─────────────────────────── */
+.nc-critical.nc-unread {
+  background: linear-gradient(135deg, rgba(230,57,70,0.07) 0%, var(--bg-card) 55%);
+}
+
+/* ── NOTICE DETAIL MODAL ─────────────────────────────────────── */
+.notice-modal-sheet {
+  background: var(--bg-card);
+  width: 100%;
+  max-width: 480px;
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 22px 22px 0 0;
+  position: relative;
+}
+.nm-close-btn {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 16px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 10;
+}
+.nm-close-btn:hover { background: rgba(255,255,255,0.13); }
+.nm-sev-bar {
+  height: 6px;
+  width: 100%;
+  border-radius: 22px 22px 0 0;
+}
+.nm-inner { padding: 22px 20px 36px; }
+.nm-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.nm-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+.nm-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.nm-meta span { display: flex; align-items: center; gap: 4px; }
+.nm-body {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 18px;
+  white-space: pre-wrap;
+}
+.nm-expires {
+  font-size: 12px;
+  color: #ff9a3c;
+  font-weight: 600;
+  margin-bottom: 18px;
+  background: rgba(255,154,60,0.08);
+  border: 1px solid rgba(255,154,60,0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nm-attachments {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+.nm-att-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.nm-att-item {
+  font-size: 13px;
+  color: var(--accent-green);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nm-att-item:last-child { border-bottom: none; }
+.nm-ack-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #e63946, #c1121f);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s, transform 0.15s;
+  box-shadow: 0 4px 16px rgba(230,57,70,0.35);
+}
+.nm-ack-btn:active { transform: scale(0.98); opacity: 0.88; }
+
+/* ── EMERGENCY OVERLAY ───────────────────────────────────────── */
+#emergencyOverlay {
+  background: radial-gradient(ellipse at center, #1a0508 0%, #0a0203 100%);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.em-overlay-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 36px 28px;
+  max-width: 420px;
+  text-align: center;
+  width: 100%;
+  min-height: fit-content;
+}
+.em-pulse-ring {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  border: 3px solid rgba(230,57,70,0.7);
+  animation: em-ring 1.4s cubic-bezier(0.24, 0.56, 0.56, 1) infinite;
+  margin-bottom: -60px;
+}
+@keyframes em-ring {
+  0%   { transform: scale(0.85); opacity: 1; }
+  100% { transform: scale(1.6);  opacity: 0; }
+}
+.em-icon {
+  font-size: 62px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 18px rgba(230,57,70,0.7));
+  animation: em-throb 0.7s ease-in-out infinite alternate;
+  position: relative;
+  z-index: 1;
+}
+@keyframes em-throb {
+  from { transform: scale(1);    filter: drop-shadow(0 0 14px rgba(230,57,70,0.6)); }
+  to   { transform: scale(1.14); filter: drop-shadow(0 0 28px rgba(230,57,70,0.9)); }
+}
+.em-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  color: var(--accent-red);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.em-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 18px;
+  line-height: 1.2;
+  text-shadow: 0 2px 20px rgba(230,57,70,0.3);
+}
+.em-body {
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.75;
+  margin-bottom: 18px;
+  max-width: 340px;
+}
+.em-meta {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 32px;
+}
+.em-ack-btn {
+  background: linear-gradient(135deg, #e63946, #c1121f);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 18px 28px;
+  cursor: pointer;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s;
+}
+.em-ack-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+  border-radius: inherit;
+}
+.em-ack-btn:active { transform: scale(0.97); }
+.em-ack-btn { animation: em-btn-glow 1.6s ease-in-out infinite; }
+@keyframes em-btn-glow {
+  0%,100% { box-shadow: 0 0 0 0 rgba(230,57,70,0); }
+  50%      { box-shadow: 0 0 0 10px rgba(230,57,70,0); }
+}
+.em-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.28);
+  margin-top: 14px;
+  letter-spacing: 0.3px;
+}
+.em-lock { overflow: hidden; }
+body.mg-sos-locked #app > :not(#emergencyOverlay):not(#syncBanner) {
+  pointer-events: none;
+  user-select: none;
+  filter: blur(1.5px) brightness(0.45);
+}
+body.mg-sos-locked #emergencyOverlay {
+  pointer-events: auto;
+}
+
+/* ── EMERGENCY SOS OVERLAY ─────────────────────────────────── */
+body.mg-sos-locked { overflow: hidden; }
+.emergency-screen {
+  width: min(100%, 560px);
+  min-height: min(92vh, 820px);
+  max-height: calc(100vh - 32px);
+  background: linear-gradient(135deg, #2a0205 0%, #0a0203 65%, #140707 100%);
+  border: 1px solid rgba(230,57,70,0.45);
+  border-radius: 28px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.emergency-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(230,57,70,0.25), transparent 60%);
+  pointer-events: none;
+}
+.emergency-screen-shell {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 4px;
+}
+.emergency-screen-icon {
+  font-size: 84px;
+  margin-bottom: 12px;
+  animation: emergency-icon-pulse 0.8s ease-in-out infinite alternate;
+}
+@keyframes emergency-icon-pulse {
+  from { transform: scale(1); filter: drop-shadow(0 0 18px rgba(230,57,70,0.55)); }
+  to { transform: scale(1.08); filter: drop-shadow(0 0 34px rgba(230,57,70,0.95)); }
+}
+.emergency-screen-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #ff7b7b;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.emergency-screen-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+.emergency-screen-message {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.88);
+  margin: 0 auto 16px;
+  max-width: 420px;
+}
+.emergency-screen-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0 20px;
+}
+.emergency-screen-meta-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: left;
+}
+.emergency-screen-meta-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 4px;
+}
+.emergency-screen-meta-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+.emergency-screen-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 16px;
+}
+.emergency-screen-action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.emergency-screen-action-item {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 14px;
+  padding: 12px 14px;
+  text-align: left;
+}
+.emergency-screen-action-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.58);
+  margin-bottom: 4px;
+}
+.emergency-screen-action-value {
+  font-size: 14px;
+  line-height: 1.45;
+  font-weight: 700;
+  color: #fff;
+}
+.emergency-hero-btn {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ff3d4f 0%, #c91624 100%);
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  padding: 16px 18px;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(230,57,70,0.4);
+  animation: emergency-btn-pulse 1.4s ease-in-out infinite;
+}
+@keyframes emergency-btn-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(230,57,70,0.16); transform: translateY(0); }
+  50% { box-shadow: 0 0 0 12px rgba(230,57,70,0); transform: translateY(-1px); }
+}
+.emergency-screen-list {
+  text-align: left;
+  margin: 16px 0 0;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.11);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+.emergency-screen-list h4 {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ff9e9e;
+  margin-bottom: 8px;
+}
+.emergency-screen-list ul {
+  margin: 0;
+  padding-left: 16px;
+  color: rgba(255,255,255,0.84);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.emergency-screen-ack {
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+}
+.emergency-screen-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(230,57,70,0.16);
+  border: 1px solid rgba(230,57,70,0.35);
+  color: #ffb0b0;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+@media (max-width: 640px) {
+  #emergencyOverlay {
+    padding: 12px;
+    align-items: flex-start;
+  }
+  .emergency-screen {
+    padding: 14px;
+    border-radius: 20px;
+    max-height: calc(100vh - 24px);
+  }
+  .emergency-screen-shell {
+    max-height: calc(100vh - 64px);
+  }
+  .emergency-screen-title { font-size: 30px; }
+  .emergency-screen-meta { grid-template-columns: 1fr; }
+  .emergency-screen-message { font-size: 14px; }
+  .emergency-screen-action-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+  <!-- SPLASH SCREEN -->
+  <div id="splash">
+    <div class="splash-inner">
+      <div class="splash-icon" style="line-height:1;margin-bottom:4px;">
+        <svg class="exc-svg-splash" viewBox="0 0 120 78" xmlns="http://www.w3.org/2000/svg" width="88" height="57" style="overflow:visible;filter:drop-shadow(0 4px 14px rgba(245,197,24,0.4))">
+          <!-- Tracks -->
+          <rect x="6" y="59" width="72" height="13" rx="6.5" fill="#1e2035" stroke="#f5c518" stroke-width="1.6"/>
+          <circle cx="13" cy="65.5" r="6.2" fill="#12141f" stroke="#f5c518" stroke-width="1.6"/>
+          <circle cx="71" cy="65.5" r="6.2" fill="#12141f" stroke="#f5c518" stroke-width="1.6"/>
+          <circle cx="29" cy="65.5" r="3.8" fill="#1e2035" stroke="#f5c518" stroke-width="1"/>
+          <circle cx="46" cy="65.5" r="3.8" fill="#1e2035" stroke="#f5c518" stroke-width="1"/>
+          <circle cx="59" cy="65.5" r="3.8" fill="#1e2035" stroke="#f5c518" stroke-width="1"/>
+          <!-- Machine body -->
+          <rect x="10" y="37" width="54" height="26" rx="3" fill="#e8b800" stroke="#b88e00" stroke-width="1.5"/>
+          <!-- Cab window -->
+          <rect x="42" y="40" width="18" height="14" rx="2" fill="#1a2a3a" stroke="#2ec4b6" stroke-width="1.2"/>
+          <line x1="51" y1="40" x2="51" y2="54" stroke="#2ec4b6" stroke-width="0.8" opacity="0.5"/>
+          <!-- Cab roof -->
+          <rect x="40" y="33" width="26" height="7" rx="2" fill="#d4a800" stroke="#b88e00" stroke-width="1.2"/>
+          <!-- Counterweight block -->
+          <rect x="7" y="41" width="15" height="17" rx="2" fill="#c49a00" stroke="#906e00" stroke-width="1"/>
+          <!-- ANIMATED BOOM GROUP -->
+          <g style="transform-origin:57px 37px;animation:exc-boom-a 2.4s ease-in-out infinite">
+            <line x1="57" y1="37" x2="90" y2="14" stroke="#d4a800" stroke-width="6.5" stroke-linecap="round"/>
+            <line x1="56" y1="37" x2="89" y2="14" stroke="#e8b800" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+            <g style="transform-origin:90px 14px;animation:exc-arm-a 2.4s ease-in-out infinite">
+              <line x1="90" y1="14" x2="108" y2="33" stroke="#c49a00" stroke-width="5.5" stroke-linecap="round"/>
+              <g style="transform-origin:108px 33px;animation:exc-bucket-a 2.4s ease-in-out infinite">
+                <path d="M108 33 L121 37 L117 54 L104 52 Z" fill="#f5c518" stroke="#b88e00" stroke-width="1.6"/>
+                <line x1="107" y1="52" x2="105" y2="60" stroke="#8a6600" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="112" y1="53" x2="111" y2="61" stroke="#8a6600" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="117" y1="52" x2="117" y2="60" stroke="#8a6600" stroke-width="2.2" stroke-linecap="round"/>
+              </g>
+            </g>
+          </g>
+          <!-- Hydraulic cylinders (static look) -->
+          <line x1="62" y1="37" x2="82" y2="20" stroke="#777" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+          <line x1="90" y1="14" x2="100" y2="27" stroke="#777" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          <!-- Dust particles -->
+          <circle cx="113" cy="57" r="2.8" fill="#8B6914" style="animation:exc-dust-a 2.4s ease-out infinite"/>
+          <circle cx="119" cy="61" r="2" fill="#8B6914" style="animation:exc-dust-a 2.4s ease-out 0.25s infinite"/>
+          <circle cx="108" cy="63" r="2.3" fill="#8B6914" style="animation:exc-dust-a 2.4s ease-out 0.5s infinite"/>
+        </svg>
+        <style>
+          @keyframes exc-boom-a   { 0%{transform:rotate(0deg)} 38%{transform:rotate(-16deg)} 62%{transform:rotate(6deg)} 100%{transform:rotate(0deg)} }
+          @keyframes exc-arm-a    { 0%{transform:rotate(0deg)} 38%{transform:rotate(20deg)}  62%{transform:rotate(-8deg)} 100%{transform:rotate(0deg)} }
+          @keyframes exc-bucket-a { 0%{transform:rotate(0deg)} 38%{transform:rotate(18deg)}  62%{transform:rotate(-6deg)} 100%{transform:rotate(0deg)} }
+          @keyframes exc-dust-a   { 0%{transform:translate(0,0);opacity:.8} 60%{transform:translate(-8px,-14px);opacity:.4} 100%{transform:translate(-14px,-26px);opacity:0} }
+        </style>
+      </div>
+      <h1 class="splash-title">MINE<span>GUARD</span></h1>
+      <p class="splash-sub">Mining Safety Companion</p>
+      <div class="splash-aml-logo">
+        <img src="icons/aml-logo.jpg" alt="ArcelorMittal Liberia" class="aml-img-splash" />
+        <div class="splash-aml-label">LIBERIA</div>
+      </div>
+      <div class="splash-bar"><div class="splash-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- APP SHELL -->
+  <div id="app" class="hidden">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-left">
+        <span class="header-icon" style="display:inline-flex;align-items:center;line-height:1;">
+          <svg viewBox="0 0 120 78" xmlns="http://www.w3.org/2000/svg" width="28" height="18" style="overflow:visible;filter:drop-shadow(0 0 5px rgba(245,197,24,0.5))">
+            <rect x="6" y="59" width="72" height="13" rx="6.5" fill="#1e2035" stroke="#f5c518" stroke-width="2"/>
+            <circle cx="13" cy="65.5" r="6.2" fill="#12141f" stroke="#f5c518" stroke-width="2"/>
+            <circle cx="71" cy="65.5" r="6.2" fill="#12141f" stroke="#f5c518" stroke-width="2"/>
+            <rect x="10" y="37" width="54" height="26" rx="3" fill="#e8b800" stroke="#b88e00" stroke-width="2"/>
+            <rect x="42" y="40" width="18" height="14" rx="2" fill="#1a2a3a" stroke="#2ec4b6" stroke-width="1.5"/>
+            <rect x="40" y="33" width="26" height="7" rx="2" fill="#d4a800"/>
+            <rect x="7" y="41" width="15" height="17" rx="2" fill="#c49a00"/>
+            <g style="transform-origin:57px 37px;animation:exc-boom-a 2.4s ease-in-out infinite">
+              <line x1="57" y1="37" x2="90" y2="14" stroke="#d4a800" stroke-width="6.5" stroke-linecap="round"/>
+              <g style="transform-origin:90px 14px;animation:exc-arm-a 2.4s ease-in-out infinite">
+                <line x1="90" y1="14" x2="108" y2="33" stroke="#c49a00" stroke-width="5.5" stroke-linecap="round"/>
+                <g style="transform-origin:108px 33px;animation:exc-bucket-a 2.4s ease-in-out infinite">
+                  <path d="M108 33 L121 37 L117 54 L104 52 Z" fill="#f5c518" stroke="#b88e00" stroke-width="2"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </span>
+        <span class="header-title">MINE<span>GUARD</span></span>
+      </div>
+      <div class="header-right">
+        <!-- Language Toggle -->
+        <div class="lang-toggle">
+          <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')">EN</button>
+          <span class="lang-divider">|</span>
+          <button class="lang-btn" data-lang="fr" onclick="switchLanguage('fr')">FR</button>
+        </div>
+        <span class="offline-badge" id="offlineBadge">● OFFLINE</span>
+      </div>
+    </header>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-tab="home" onclick="showTab('home', this)">
+        <span class="nav-icon">🏠</span>
+        <span id="nav-home">Home</span>
+      </button>
+      <button class="nav-btn" data-tab="glossary" onclick="showTab('glossary', this)">
+        <span class="nav-icon">📖</span>
+        <span id="nav-glossary">Glossary</span>
+      </button>
+      <button class="nav-btn" data-tab="ppe" onclick="showTab('ppe', this)">
+        <span class="nav-icon">🦺</span>
+        <span id="nav-ppe">PPE</span>
+      </button>
+      <button class="nav-btn" data-tab="jsa" onclick="showTab('jsa', this)">
+        <span class="nav-icon">📋</span>
+        <span id="nav-jsa">JSA</span>
+      </button>
+      <button class="nav-btn" data-tab="incident" onclick="showTab('incident', this)">
+        <span class="nav-icon">📸</span>
+        <span id="nav-report">Report</span>
+      </button>
+      <button class="nav-btn" data-tab="emergency" onclick="showTab('emergency', this)">
+        <span class="nav-icon">🚨</span>
+        <span id="nav-sos">SOS</span>
+      </button>
+      <button class="nav-btn nav-notices" data-tab="notices" onclick="showTab('notices', this)" style="position:relative;">
+        <span class="nav-icon">📢</span>
+        <span id="nav-notices-label">Notices</span>
+        <span id="noticeNavBadge" class="notice-nav-badge" style="display:none;"></span>
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- =================== HOME TAB =================== -->
+      <section id="tab-home" class="tab-section active">
+
+        <!-- ArcelorMittal Liberia Banner -->
+        <div class="aml-banner">
+          <div class="aml-banner-logo">
+            <img src="icons/aml-logo.jpg" alt="ArcelorMittal Liberia" class="aml-img-banner" />
+          </div>
+          <div class="aml-banner-info">
+            <div class="aml-tagline">Iron Ore Mining</div>
+            <div class="aml-desc">Nimba County, Liberia</div>
+            <div class="aml-sub">World's Leading Steel &amp; Mining Company</div>
+          </div>
+        </div>
+
+        <div class="home-hero">
+          <div class="hero-text">
+            <h2 id="heroTitle">Stay Safe.<br/>Work Smart.</h2>
+            <p id="heroSub">Your on-site mining safety companion. Works fully offline.</p>
+          </div>
+          <div class="hero-badge" style="display:flex;align-items:center;justify-content:center;line-height:1;">
+            <svg class="exc-svg-hero" viewBox="0 0 120 78" xmlns="http://www.w3.org/2000/svg" width="72" height="46" style="overflow:visible;filter:drop-shadow(0 4px 14px rgba(245,197,24,0.4))">
+          <!-- Tracks -->
+          <rect x="6" y="59" width="72" height="13" rx="6.5" fill="#1e2035" stroke="#f5c518" stroke-width="1.6"/>
+          <circle cx="13" cy="65.5" r="6.2" fill="#12141f" stroke="#f5c518" stroke-width="1.6"/>
+          <circle cx="71" cy="65.5" r="6.2" fill="#12141f" stroke="#f5c518" stroke-width="1.6"/>
+          <circle cx="29" cy="65.5" r="3.8" fill="#1e2035" stroke="#f5c518" stroke-width="1"/>
+          <circle cx="46" cy="65.5" r="3.8" fill="#1e2035" stroke="#f5c518" stroke-width="1"/>
+          <circle cx="59" cy="65.5" r="3.8" fill="#1e2035" stroke="#f5c518" stroke-width="1"/>
+          <!-- Machine body -->
+          <rect x="10" y="37" width="54" height="26" rx="3" fill="#e8b800" stroke="#b88e00" stroke-width="1.5"/>
+          <!-- Cab window -->
+          <rect x="42" y="40" width="18" height="14" rx="2" fill="#1a2a3a" stroke="#2ec4b6" stroke-width="1.2"/>
+          <line x1="51" y1="40" x2="51" y2="54" stroke="#2ec4b6" stroke-width="0.8" opacity="0.5"/>
+          <!-- Cab roof -->
+          <rect x="40" y="33" width="26" height="7" rx="2" fill="#d4a800" stroke="#b88e00" stroke-width="1.2"/>
+          <!-- Counterweight block -->
+          <rect x="7" y="41" width="15" height="17" rx="2" fill="#c49a00" stroke="#906e00" stroke-width="1"/>
+          <!-- ANIMATED BOOM GROUP -->
+          <g style="transform-origin:57px 37px;animation:exc-boom-a 2.4s ease-in-out infinite">
+            <line x1="57" y1="37" x2="90" y2="14" stroke="#d4a800" stroke-width="6.5" stroke-linecap="round"/>
+            <line x1="56" y1="37" x2="89" y2="14" stroke="#e8b800" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+            <g style="transform-origin:90px 14px;animation:exc-arm-a 2.4s ease-in-out infinite">
+              <line x1="90" y1="14" x2="108" y2="33" stroke="#c49a00" stroke-width="5.5" stroke-linecap="round"/>
+              <g style="transform-origin:108px 33px;animation:exc-bucket-a 2.4s ease-in-out infinite">
+                <path d="M108 33 L121 37 L117 54 L104 52 Z" fill="#f5c518" stroke="#b88e00" stroke-width="1.6"/>
+                <line x1="107" y1="52" x2="105" y2="60" stroke="#8a6600" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="112" y1="53" x2="111" y2="61" stroke="#8a6600" stroke-width="2.2" stroke-linecap="round"/>
+                <line x1="117" y1="52" x2="117" y2="60" stroke="#8a6600" stroke-width="2.2" stroke-linecap="round"/>
+              </g>
+            </g>
+          </g>
+          <!-- Hydraulic cylinders (static look) -->
+          <line x1="62" y1="37" x2="82" y2="20" stroke="#777" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+          <line x1="90" y1="14" x2="100" y2="27" stroke="#777" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          <!-- Dust particles -->
+          <circle cx="113" cy="57" r="2.8" fill="#8B6914" style="animation:exc-dust-a 2.4s ease-out infinite"/>
+          <circle cx="119" cy="61" r="2" fill="#8B6914" style="animation:exc-dust-a 2.4s ease-out 0.25s infinite"/>
+          <circle cx="108" cy="63" r="2.3" fill="#8B6914" style="animation:exc-dust-a 2.4s ease-out 0.5s infinite"/>
+        </svg>
+            <style>
+          @keyframes exc-boom-a   { 0%{transform:rotate(0deg)} 38%{transform:rotate(-16deg)} 62%{transform:rotate(6deg)} 100%{transform:rotate(0deg)} }
+          @keyframes exc-arm-a    { 0%{transform:rotate(0deg)} 38%{transform:rotate(20deg)}  62%{transform:rotate(-8deg)} 100%{transform:rotate(0deg)} }
+          @keyframes exc-bucket-a { 0%{transform:rotate(0deg)} 38%{transform:rotate(18deg)}  62%{transform:rotate(-6deg)} 100%{transform:rotate(0deg)} }
+          @keyframes exc-dust-a   { 0%{transform:translate(0,0);opacity:.8} 60%{transform:translate(-8px,-14px);opacity:.4} 100%{transform:translate(-14px,-26px);opacity:0} }
+        </style>
+          </div>
+        </div>
+
+        <div class="quick-access">
+          <h3 class="section-title" id="quickAccessTitle">Quick Access</h3>
+          <div class="quick-grid">
+            <button class="quick-card" onclick="showTab('glossary', document.querySelector('[data-tab=glossary]'))">
+              <span class="qc-icon">📖</span>
+              <span class="qc-label" id="qc-glossary-label">Glossary</span>
+              <span class="qc-count" id="glossaryCount">0 terms</span>
+            </button>
+            <button class="quick-card" onclick="showTab('ppe', document.querySelector('[data-tab=ppe]'))">
+              <span class="qc-icon">🦺</span>
+              <span class="qc-label" id="qc-ppe-label">PPE Guide</span>
+              <span class="qc-count" id="ppeQuickCount">12 items</span>
+            </button>
+            <button class="quick-card" onclick="showTab('jsa', document.querySelector('[data-tab=jsa]'))">
+              <span class="qc-icon">📋</span>
+              <span class="qc-label" id="qc-jsa-label">JSA Tool</span>
+              <span class="qc-count" id="qc-jsa-count">Risk form</span>
+            </button>
+            <button class="quick-card danger" onclick="showTab('emergency', document.querySelector('[data-tab=emergency]'))">
+              <span class="qc-icon">🚨</span>
+              <span class="qc-label" id="qc-emergency-label">Emergency</span>
+              <span class="qc-count" id="qc-emergency-count">Tap now</span>
+            </button>
+            <button class="quick-card notices-card" onclick="showTab('notices', document.querySelector('[data-tab=notices]'))">
+              <span class="qc-icon">📢</span>
+              <span class="qc-label">Safety Notices</span>
+              <span class="qc-count" id="qcNoticeCount">Loading...</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Admin link -->
+        <a href="admin.html" class="admin-link-btn">
+          🖥️ <span id="adminLinkText">Open Admin Dashboard →</span>
+        </a>
+
+        <!-- Notification Widget -->
+        <div id="notifWidget"></div>
+
+        <!-- Safety Tip -->
+        <div class="safety-tip-box">
+          <div class="tip-label" id="tipLabel">💡 SAFETY TIP OF THE DAY</div>
+          <div class="tip-text" id="dailyTip">Loading tip...</div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-num" id="glossaryStat">229</div>
+            <div class="stat-label" id="statTermsDefined">Terms Defined</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">12</div>
+            <div class="stat-label" id="statPPEItems">PPE Items</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">100%</div>
+            <div class="stat-label" id="statOffline">Offline Ready</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================== GLOSSARY TAB =================== -->
+      <section id="tab-glossary" class="tab-section">
+        <div class="tab-header">
+          <h2 class="tab-title" id="glossaryTabTitle">Mining Glossary</h2>
+          <p class="tab-sub" id="glossaryTabSub">Tap any term to expand its definition</p>
+        </div>
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="glossarySearch" placeholder="Search terms..." oninput="filterGlossary(this.value)" />
+        </div>
+        <div class="filter-row" id="letterFilter"></div>
+        <div id="glossaryList" class="glossary-list"></div>
+      </section>
+
+      <!-- =================== PPE TAB =================== -->
+      <section id="tab-ppe" class="tab-section">
+        <div class="tab-header">
+          <h2 class="tab-title" id="ppeTabTitle">PPE Reference Guide</h2>
+          <p class="tab-sub" id="ppeTabSub">Personal Protective Equipment — know what to wear and why</p>
+        </div>
+        <div id="ppeList" class="ppe-list"></div>
+      </section>
+
+      <!-- =================== JSA TAB =================== -->
+      <section id="tab-jsa" class="tab-section">
+        <div class="tab-header">
+          <h2 class="tab-title" id="jsaTabTitle">Job Safety Analysis</h2>
+          <p class="tab-sub" id="jsaTabSub">Complete a JSA before starting any high-risk task</p>
+        </div>
+        <div class="jsa-form">
+          <div class="form-group">
+            <label id="label-jsa-worker">Worker Name</label>
+            <input type="text" id="jsa-worker" placeholder="Enter your full name" />
+          </div>
+          <div class="form-group">
+            <label id="label-jsa-task">Job / Task Description</label>
+            <input type="text" id="jsa-task" placeholder="Describe the task" />
+          </div>
+          <div class="form-group">
+            <label id="label-jsa-location">Location / Area</label>
+            <input type="text" id="jsa-location" placeholder="e.g. Pit 3 - Bench 12" />
+          </div>
+          <div class="form-group">
+            <label id="label-jsa-date">Date</label>
+            <input type="date" id="jsa-date" />
+          </div>
+
+          <h3 class="jsa-section-title" id="jsaHazardTitle">⚠️ Hazard Identification</h3>
+          <div id="hazardRows">
+            <div class="hazard-row">
+              <input type="text" placeholder="Hazard identified" class="hazard-input" />
+              <select class="risk-select">
+                <option value="">Risk Level</option>
+                <option value="low">🟢 Low</option>
+                <option value="medium">🟡 Medium</option>
+                <option value="high">🔴 High</option>
+                <option value="critical">⛔ Critical</option>
+              </select>
+              <input type="text" placeholder="Control measure" class="control-input" />
+            </div>
+          </div>
+          <button class="btn-add-hazard" id="btnAddHazard" onclick="addHazardRow()">+ Add Hazard</button>
+
+          <h3 class="jsa-section-title" id="jsaPPETitle">✅ PPE Required for This Task</h3>
+          <div class="ppe-checklist" id="ppeChecklist"></div>
+
+          <div class="form-group">
+            <label id="label-jsa-supervisor">Supervisor / Approver Name</label>
+            <input type="text" id="jsa-supervisor" placeholder="Supervisor name" />
+          </div>
+
+          <div class="jsa-actions">
+            <button class="btn-submit" id="btnSaveJSA" onclick="submitJSA()">📄 Save JSA</button>
+            <button class="btn-clear" id="btnClearJSA" onclick="clearJSA()">🗑 Clear Form</button>
+          </div>
+          <div id="jsaConfirm" class="jsa-confirm hidden">✅ JSA saved successfully! Stay safe on site.</div>
+        </div>
+        <div id="savedJSAs" class="saved-jsas"></div>
+      </section>
+
+      <!-- =================== EMERGENCY TAB =================== -->
+      <section id="tab-emergency" class="tab-section">
+        <div class="emergency-header">
+          <div class="emergency-pulse">🚨</div>
+          <h2 id="emergencyTabTitle">EMERGENCY</h2>
+          <p id="emergencyTabSub">Immediate actions &amp; contacts</p>
+        </div>
+
+        <div class="emergency-steps">
+          <h3 class="section-title" id="emergencyActionsTitle">🔴 Immediate Actions</h3>
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-text" id="emergencyStep1"><strong>STOP</strong> all work immediately and alert nearby workers</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-text" id="emergencyStep2"><strong>ASSESS</strong> the situation — do not enter a danger zone</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-text" id="emergencyStep3"><strong>CALL</strong> the emergency number and give your location</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-text" id="emergencyStep4"><strong>EVACUATE</strong> to the nearest muster point</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">5</div>
+            <div class="step-text" id="emergencyStep5"><strong>REPORT</strong> to supervisor and await further instructions</div>
+          </div>
+        </div>
+
+        <div class="contacts-section">
+          <h3 class="section-title" id="emergencyContactsTitle">📞 Emergency Contacts</h3>
+          <div id="emergencyContacts" class="contacts-list"></div>
+          <button class="btn-add-contact" id="btnAddContact" onclick="showAddContact()">+ Add Site Contact</button>
+          <div id="addContactForm" class="add-contact-form hidden">
+            <input type="text" id="contactName" placeholder="Contact name / role" />
+            <input type="tel" id="contactNumber" placeholder="Phone number" />
+            <button id="btnSaveContact" onclick="saveContact()">Save</button>
+            <button id="btnCancelContact" onclick="hideAddContact()">Cancel</button>
+          </div>
+        </div>
+
+        <div class="first-aid-section">
+          <h3 class="section-title" id="firstAidTitle">🩺 First Aid Quick Guide</h3>
+          <div id="firstAidList" class="first-aid-list"></div>
+        </div>
+      </section>
+
+      <!-- =================== INCIDENT REPORT TAB =================== -->
+      <section id="tab-incident" class="tab-section">
+        <div class="tab-header">
+          <h2 class="tab-title" id="incTabTitle">Incident <span style="color:var(--accent-yellow)">Report</span></h2>
+          <p class="tab-sub" id="incTabSub">Report hazards, near misses, and incidents with photo evidence</p>
+        </div>
+
+        <div class="incident-form">
+
+          <!-- Reporter Info -->
+          <div class="incident-block">
+            <div class="incident-block-title" id="incReporterTitle">👷 Reporter Information</div>
+            <div class="form-group">
+              <label id="label-inc-name">Full Name</label>
+              <input type="text" id="inc-name" placeholder="Your full name" />
+            </div>
+            <div class="form-group">
+              <label id="label-inc-badge">Employee ID / Badge No.</label>
+              <input type="text" id="inc-badge" placeholder="e.g. AML-2045" />
+            </div>
+            <div class="form-group">
+              <label id="label-inc-dept">Department / Crew</label>
+              <input type="text" id="inc-dept" placeholder="e.g. Drilling Crew B" />
+            </div>
+          </div>
+
+          <!-- Incident Details -->
+          <div class="incident-block">
+            <div class="incident-block-title" id="incDetailsTitle">📋 Incident Details</div>
+            <div class="form-group">
+              <label id="label-inc-datetime">Date &amp; Time</label>
+              <input type="datetime-local" id="inc-datetime" />
+            </div>
+            <div class="form-group">
+              <label id="label-inc-location">Location / Area</label>
+              <input type="text" id="inc-location" placeholder="e.g. Pit 3 - Bench 6, North Wall" />
+            </div>
+            <div class="form-group">
+              <label id="label-inc-type">Incident Type</label>
+              <select id="inc-type">
+                <option value="">-- Select type --</option>
+                <option value="near_miss">⚠️ Near Miss</option>
+                <option value="hazard">🔶 Hazard Observation</option>
+                <option value="injury">🩺 Injury / Illness</option>
+                <option value="property">🔧 Property Damage</option>
+                <option value="environmental">🌿 Environmental</option>
+                <option value="security">🔒 Security</option>
+                <option value="fire">🔥 Fire / Explosion</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label id="label-inc-severity">Severity</label>
+              <div class="severity-row">
+                <button type="button" class="sev-btn" data-sev="low" onclick="setSeverity('low', this)">🟢 Low</button>
+                <button type="button" class="sev-btn" data-sev="medium" onclick="setSeverity('medium', this)">🟡 Medium</button>
+                <button type="button" class="sev-btn" data-sev="high" onclick="setSeverity('high', this)">🔴 High</button>
+                <button type="button" class="sev-btn" data-sev="critical" onclick="setSeverity('critical', this)">⛔ Critical</button>
+              </div>
+              <input type="hidden" id="inc-severity" value="" />
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="incident-block">
+            <div class="incident-block-title" id="incWhatTitle">📝 What Happened?</div>
+            <div class="form-group">
+              <label id="label-inc-description">Describe the incident in detail</label>
+              <textarea id="inc-description" rows="4" placeholder="Describe exactly what happened..."></textarea>
+            </div>
+            <div class="form-group">
+              <label id="label-inc-action">Immediate Action Taken</label>
+              <textarea id="inc-action" rows="3" placeholder="What did you do immediately after?"></textarea>
+            </div>
+          </div>
+
+          <!-- Photo Evidence -->
+          <div class="incident-block">
+            <div class="incident-block-title" id="incPhotoTitle">📸 Photo Evidence</div>
+            <p class="photo-hint" id="incPhotoHint">Attach up to 3 photos of the hazard or incident scene</p>
+            <div class="photo-btn-row">
+              <button type="button" class="photo-action-btn camera-btn" onclick="document.getElementById('photoCamera').click()">
+                <span>📷</span>
+                <span id="btnTakePhoto">Take Photo</span>
+                <span id="labelOpensCamera" style="font-size:10px;color:rgba(0,0,0,0.5);">Opens camera</span>
+              </button>
+              <button type="button" class="photo-action-btn gallery-btn" onclick="document.getElementById('photoGallery').click()">
+                <span>🖼️</span>
+                <span id="btnChoosePhoto">Choose Photo</span>
+                <span id="labelFromGallery" style="font-size:10px;color:rgba(255,255,255,0.5);">From gallery</span>
+              </button>
+            </div>
+            <input type="file" id="photoCamera" accept="image/*" capture="environment" onchange="handlePhotos(this)" style="display:none" />
+            <input type="file" id="photoGallery" accept="image/*" multiple onchange="handlePhotos(this)" style="display:none" />
+            <div id="photoCount" style="font-size:12px;color:var(--text-muted);margin-top:10px;text-align:center;"></div>
+            <div id="photoPreviewRow" class="photo-preview-row"></div>
+          </div>
+
+          <!-- Witnesses -->
+          <div class="incident-block">
+            <div class="incident-block-title" id="incWitnessTitle">👥 Witnesses (if any)</div>
+            <div class="form-group">
+              <input type="text" id="inc-witnesses" placeholder="Names of any witnesses" />
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="incident-actions">
+            <button type="button" class="btn-submit" id="btnSubmitIncident" onclick="submitIncident()">📤 Submit Report</button>
+            <button type="button" class="btn-clear" id="btnClearIncident" onclick="clearIncident()">🗑 Clear</button>
+          </div>
+          <div id="incidentConfirm" class="jsa-confirm hidden">✅ Incident report submitted!</div>
+        </div>
+
+        <div id="pastIncidents" class="saved-jsas" style="padding:0 16px 24px;"></div>
+      </section>
+
+
+      <!-- =================== SAFETY NOTICES TAB =================== -->
+      <section id="tab-notices" class="tab-section">
+
+        <!-- Sticky Header -->
+        <div class="notices-header">
+
+          <!-- Hero row -->
+          <div class="notices-hero">
+            <div class="notices-hero-text">
+              <h2>Safety <span style="color:var(--accent-yellow)">Notices</span></h2>
+              <p>Official communications from safety management</p>
+            </div>
+            <div class="notices-sync-pill" id="noticesLastSynced">
+              <span class="notices-sync-dot"></span>
+              Not synced
+            </div>
+          </div>
+
+          <!-- Search -->
+          <div class="notices-search-wrap">
+            <div class="notices-search-inner">
+              <span style="font-size:15px;color:var(--text-muted);">🔍</span>
+              <input type="text" placeholder="Search notices, keywords, author…"
+                     oninput="searchNotices(this.value)" />
+            </div>
+          </div>
+
+          <!-- Filter pills -->
+          <div class="notice-filters">
+            <button class="notice-filter-btn active" onclick="setNoticeFilter('all',this)">All</button>
+            <button class="notice-filter-btn nf-info"     onclick="setNoticeFilter('info',this)">ℹ️ Info</button>
+            <button class="notice-filter-btn nf-warning"  onclick="setNoticeFilter('warning',this)">⚠️ Warning</button>
+            <button class="notice-filter-btn nf-critical" onclick="setNoticeFilter('critical',this)">🚨 Critical</button>
+            <button class="notice-filter-btn nf-resolved" onclick="setNoticeFilter('resolved',this)">✅ Resolved</button>
+            <button class="notice-filter-btn" id="noticeSortBtn" onclick="toggleNoticeSort()">↓ Newest</button>
+          </div>
+        </div>
+
+        <!-- Notices list -->
+        <div id="noticesList" class="notices-list">
+          <div class="notices-empty">
+            <div style="font-size:42px;margin-bottom:12px;opacity:0.4;">📋</div>
+            <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">Loading Notices</div>
+            <div style="font-size:13px;color:var(--text-muted);">Fetching from safety management…</div>
+          </div>
+        </div>
+      </section>
+
+
+    </main>
+
+
+        <!-- ======= NOTICE DETAIL MODAL ======= -->
+    <div id="noticeModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:500;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);">
+      <div class="notice-modal-sheet">
+        <button class="nm-close-btn" onclick="closeNoticeModal()">✕</button>
+        <div id="noticeModalBody"></div>
+      </div>
+    </div>
+
+    <!-- ======= EMERGENCY ALERT OVERLAY ======= -->
+    <div id="emergencyOverlay" style="display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;flex-direction:column;"></div>
+
+    <!-- Firebase sync status banner (shown on home tab) -->
+    <div id="syncBanner" class="sync-banner" style="display:none;"></div>
+  </div>
+
+  <!-- MineGuard files — load order: data → lang → firebase → app -->
+  <!-- firebase.js uses Firestore REST API — no SDK scripts needed -->
+  <script src="data.js"></script>
+  <script src="lang.js"></script>
+  <script src="firebase.js"></script>
+  <script src="notices.js"></script>
+  <script src="app.js"></script>
+
+  <!-- Set correct active lang button on load -->
+  <script>
+    (function() {
+      const lang = localStorage.getItem('mineguard_lang') || 'en';
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === lang);
+      });
+    })();
+  </script>
+
+<!-- Your existing app content above -->
+<!-- VERSION CHECK (FIXED) -->
+<script>
+const CURRENT_VERSION = "1.0.0";
+
+async function checkForUpdate() {
+  try {
+    if (!navigator.onLine) return;
+    const res = await fetch("https://eman1992hub.github.io/AML-MineGuard/version.json");
+    const data = await res.json();
+
+    if (data.version && data.version !== CURRENT_VERSION) {
+      const msg =
+        "🚨 NEW UPDATE AVAILABLE\n\n" +
+        data.message +
+        "\n\nCurrent: " + CURRENT_VERSION +
+        "\nNew: " + data.version;
+
+      if (confirm(msg)) {
+        window.location.href = data.apk_url;
+      }
+    }
+  } catch (err) {
+    console.log("Update check failed", err);
+  }
+}
+
+window.addEventListener("load", () => {
+  setTimeout(checkForUpdate, 2000);
+});
+</script>
+</body>
+</html>
